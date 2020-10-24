@@ -24,7 +24,6 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <CssBaseline />
-      <h2 style={{ textAlign: 'center', color: 'red' }}>VERY VISIBLE CHANGE</h2>
       <App />
     </Provider>
   </React.StrictMode>,
