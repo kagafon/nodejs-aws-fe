@@ -9,9 +9,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Product } from 'models/Product';
 import { formatAsPrice } from 'utils/utils';
 import AddProductToCart from 'components/AddProductToCart/AddProductToCart';
-// import axios from 'axios';
-// import API_PATHS from "constants/apiPaths";
-import productList from './productList.json';
+import axios from 'axios';
+import API_PATHS from 'constants/apiPaths';
+import { CircularProgress } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -37,12 +37,13 @@ export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    // axios.get(`${API_PATHS.bff}/product/available/`)
-    //   .then(res => setProducts(res.data));
-    setProducts(productList);
+    axios
+      .get(`${API_PATHS.product}/products`)
+      .then((res) => setProducts(res.data))
+      .catch((err) => console.log(err));
   }, []);
 
-  return (
+  return products.length ? (
     <Grid container spacing={4}>
       {products.map((product: Product) => (
         <Grid item key={product.id} xs={12} sm={6} md={4}>
@@ -65,5 +66,7 @@ export default function Products() {
         </Grid>
       ))}
     </Grid>
+  ) : (
+    <CircularProgress></CircularProgress>
   );
 }
